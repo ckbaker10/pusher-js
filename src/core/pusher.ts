@@ -108,7 +108,9 @@ export default class Pusher {
       activityTimeout: this.config.activityTimeout,
       pongTimeout: this.config.pongTimeout,
       unavailableTimeout: this.config.unavailableTimeout,
-      useTLS: Boolean(this.config.useTLS)
+      useTLS: Boolean(this.config.useTLS),
+      retryDisconnected: Boolean(this.config.retryDisconnected),
+      retryDisDelay: this.config.retryDisDelay
     });
 
     this.connection.bind('connected', () => {

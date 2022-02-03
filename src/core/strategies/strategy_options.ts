@@ -13,6 +13,9 @@ interface StrategyOptions {
   timeoutLimit?: number;
   ttl?: number;
   useTLS?: boolean;
+  // Retry Disconnected
+  retryDisconnected?: boolean;
+  retryDisDelay?: number;
 }
 
 export default StrategyOptions;

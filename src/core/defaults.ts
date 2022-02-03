@@ -17,6 +17,10 @@ export interface DefaultConfig {
   pongTimeout: number;
   unavailableTimeout: number;
   cluster: string;
+  
+  // Retry Disconnected
+  retryDisconnected: boolean;
+  retryDisDelay: number;
 
   cdn_http?: string;
   cdn_https?: string;
@@ -44,6 +48,11 @@ var Defaults: DefaultConfig = {
   pongTimeout: 30000,
   unavailableTimeout: 10000,
   cluster: 'mt1',
+  
+  // Retry Disconnected Sessions
+  retryDisconnected: false,
+  retryDisDelay: 3000,
+  
 
   // CDN configuration
   cdn_http: CDN_HTTP,

@@ -9,6 +9,9 @@ interface ConnectionManagerOptions {
   pongTimeout: number;
   activityTimeout: number;
   useTLS: boolean;
+  // Retry Disconnected
+  retryDisconnected: boolean;
+  retryDisDelay: number;
 }
 
 export default ConnectionManagerOptions;

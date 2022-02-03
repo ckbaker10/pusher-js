@@ -32,6 +32,10 @@ export interface Config {
   wsPath: string;
   wsPort: number;
   wssPort: number;
+  
+  // Retry Disconnected
+  retryDisconnected: boolean;
+  retryDisDelay: number;
 
   // these are all optional parameters or overrrides. The customer can set these
   // but it's not strictly necessary
@@ -62,10 +66,15 @@ export function getConfig(opts: Options): Config {
     wsPort: opts.wsPort || Defaults.wsPort,
     wssPort: opts.wssPort || Defaults.wssPort,
 
+    // Retry Disconnected
+    retryDisconnected: opts.retryDisconnected || Defaults.retryDisconnected,
+    retryDisDelay: opts.retryDisDelay || Defaults.retryDisDelay,
+    
     enableStats: getEnableStatsConfig(opts),
     httpHost: getHttpHost(opts),
     useTLS: shouldUseTLS(opts),
     wsHost: getWebsocketHost(opts)
+    
   };
 
   if ('auth' in opts) config.auth = opts.auth;

@@ -29,4 +29,7 @@ export interface Options {
   wsPath?: string;
   wsPort?: number;
   wssPort?: number;
+  // Retry Disconnected
+  retryDisconnected?: boolean;
+  retryDisDelay?: number;
 }
