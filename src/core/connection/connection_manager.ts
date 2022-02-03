@@ -56,6 +56,8 @@ export default class ConnectionManager extends EventsDispatcher {
   activityTimer: Timer;
   retryTimer: Timer;
   activityTimeout: number;
+  retryDisconnected: boolean;
+  retryDisDelay: number;
   strategy: Strategy;
   runner: StrategyRunner;
   errorCallbacks: ErrorCallbacks;
@@ -71,6 +73,9 @@ export default class ConnectionManager extends EventsDispatcher {
     this.options = options;
     this.timeline = this.options.timeline;
     this.usingTLS = this.options.useTLS;
+    
+    this.retryDisconnected = this.options.retryDisconnected;
+    this.retryDisDelay = this.options.retryDisDelay;
 
     this.errorCallbacks = this.buildErrorCallbacks();
     this.connectionCallbacks = this.buildConnectionCallbacks(
@@ -141,7 +146,8 @@ export default class ConnectionManager extends EventsDispatcher {
     }
   }
 
-  /** Closes the connection. */
+  /** Closes the connection.
+      */
   disconnect() {
     this.disconnectInternally();
     this.updateState('disconnected');
@@ -315,7 +321,10 @@ export default class ConnectionManager extends EventsDispatcher {
         this.retryIn(0);
       }),
       refused: withErrorEmitted(() => {
-        this.disconnect();
+        this.disconnect();  
+        if ( this.retryDisconnected === true ){
+          this.retryIn(this.retryDisDelay);
+        }
       }),
       backoff: withErrorEmitted(() => {
         this.retryIn(1000);
